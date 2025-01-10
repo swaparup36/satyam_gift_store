@@ -1,0 +1,154 @@
+"use client";
+
+
+
+import React, { useState } from 'react';
+import { Star } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { allProducts } from '@/lib/products';
+
+
+const categories = [
+  "All Categories",
+  "Home & Living",
+  "Jewelry & Accessories",
+  "Occasion Gifts",
+  "Office & Stationery",
+  "Personalised Gifts",
+  "Uncategorized"
+];
+
+const ProductsPage = () => {
+  const [priceRange, setPriceRange] = useState([50, 5000]);
+  const [sortingOrder, setSortingOrder] = useState<string>("Default sorting");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
+
+  return (
+    <div className="max-w-7xl mx-auto px-2 py-24">
+      {/* Breadcrumb */}
+      <nav className="text-sm mb-8">
+        <ol className="flex items-center space-x-2 text-gray-500">
+          <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
+          <li>›</li>
+          <li className="text-gray-900">Shop</li>
+        </ol>
+      </nav>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Sidebar */}
+        <div className="md:col-span-1 mr-4 mt-2">
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-4">Product categories</h2>
+            <ul className="space-y-3">
+              {categories.map((category) => (
+                <li key={category}>
+                  <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category)}>
+                    {category}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold mb-4">Filter by Price</h2>
+            <input
+              type="range"
+              min="50"
+              max="5000"
+              value={priceRange[1]}
+              onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+              className="w-full"
+            />
+            <div className="flex items-center mt-2">
+              <span className="text-gray-600">Price: ₹{priceRange[0]} — ₹{priceRange[1]}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Products Grid */}
+        <div className="md:col-span-3">
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-gray-600">Showing 1–4 of {allProducts.length} results</p>
+            <div className="flex items-center space-x-4">
+              <select className="border rounded-md px-4 py-2" value={sortingOrder} onChange={(e) => setSortingOrder(e.target.value)}>
+                <option>Default sorting</option>
+                <option>Sort by popularity</option>
+                <option>Sort by average rating</option>
+                <option>Sort by latest</option>
+                <option>Sort by price: low to high</option>
+                <option>Sort by price: high to low</option>
+              </select>
+            </div>
+          </div>
+
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}>
+            {allProducts
+            .filter((product) => product.discountedPrice < priceRange[1])
+            .sort((a, b) => {
+              switch(sortingOrder) {
+                case "Sort by price: low to high": return a.discountedPrice - b.discountedPrice
+                case "Sort by price: high to low": return b.discountedPrice - a.discountedPrice
+                case "Sort by average rating": return b.rating - a.rating
+                case "Sort by popularity": return b.reviews.length - a.reviews.length
+                default: return 0
+              }
+            })
+            .filter((product) => {
+              if(selectedCategory !== "All Categories") {
+                return product.category === selectedCategory;
+              }
+
+              return product;
+            })
+            .map((product) => (
+              <div key={product.id} className="group">
+                <Link href={`/product-details/${product.id}`} className="block relative">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full aspect-square object-cover rounded-lg"
+                    width={800}
+                    height={800}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-200" />
+                </Link>
+                <div className="mt-4">
+                  <Link href={`/product-details/${product.id}`} className="block">
+                    <h3 className="text-lg font-medium text-gray-900 hover:text-[#C17777]">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={16}
+                          className={i < product.rating ? 'fill-current' : ''}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <span className="text-lg font-medium text-[#C17777]">
+                      ₹{product.discountedPrice}
+                    </span>
+                    {product.price && (
+                      <span className="text-sm text-gray-500 line-through">
+                        ₹{product.price}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductsPage;
