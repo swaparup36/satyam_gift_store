@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,17 +20,14 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link href="/admin/all-products" className="text-gray-700 hover:text-[#B8860B] transition-colors">
+                All Products
+            </Link>
+            <Link href="/admin/add-product" className="text-gray-700 hover:text-[#B8860B] transition-colors">
+                Add Product
+            </Link>
             <Link href="/" className="text-gray-700 hover:text-[#B8860B] transition-colors">
-              Home
-            </Link>
-            <Link href="/shop" className="text-gray-700 hover:text-[#B8860B] transition-colors">
-              Shop
-            </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#B8860B] transition-colors">
-              About Us
-            </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#B8860B] transition-colors">
-              Contact
+                User view
             </Link>
           </div>
 
@@ -46,17 +43,14 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              <Link href="/admin/all-products" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
+                All Products
+              </Link>
+              <Link href="/admin/add-product" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
+                Add Product
+              </Link>
               <Link href="/" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
-                Home
-              </Link>
-              <Link href="/shop" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
-                Shop
-              </Link>
-              <Link href="/about" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
-                About Us
-              </Link>
-              <Link href="/contact" className="block px-3 py-2 text-gray-700 hover:text-[#B8860B] transition-colors">
-                Contact
+                User view
               </Link>
             </div>
           </div>

@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'satyam-gift-store.s3.ap-south-1.amazonaws.com',
+      }
+    ]
   }
 };
 

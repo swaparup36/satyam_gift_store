@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -19,7 +20,7 @@ const Footer = () => {
           </div>
 
           {/* Information */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">INFOMATION</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-600 hover:text-gray-900">My account</a></li>
@@ -27,6 +28,14 @@ const Footer = () => {
               <li><a href="#" className="text-gray-600 hover:text-red-500">Reminder Service</a></li>
               <li><a href="#" className="text-gray-600 hover:text-gray-900">Shipping & Returns</a></li>
               <li><a href="#" className="text-gray-600 hover:text-gray-900">Sign Up</a></li>
+            </ul>
+          </div> */}
+
+          {/* Admin */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Admin</h3>
+            <ul className="space-y-2">
+              <li><Link href="/admin/login" className="text-gray-600 hover:text-gray-900">Admin Panel</Link></li>
             </ul>
           </div>
 

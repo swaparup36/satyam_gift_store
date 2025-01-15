@@ -4,6 +4,7 @@ import { allProducts } from '@/lib/products';
 import { Gift, ArrowRight, Package, HeadphonesIcon, MessageSquare, PartyPopper } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import FeatureProducts from './FeatureProducts';
 
 export default function Home() {
   return (
@@ -31,7 +32,7 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href='/shop' className="bg-[#B8860B] hover:bg-[#8B6914] text-white px-8 py-6 text-lg flex items-center h-5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md">
+                <Link href='/shop' className="bg-[#B8860B] hover:bg-[#8B6914] text-white px-8 py-6 text-lg flex items-center h-5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md justify-center">
                   Shop Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -57,7 +58,7 @@ export default function Home() {
             </div>
             
             {/* Image */}
-            <div className="relative">
+            <div className="relative md:block hidden">
               <div className="aspect-square rounded-full bg-[#FFF5E6] overflow-hidden">
                 <Image
                   src="/images/hero.jpg"
@@ -132,26 +133,7 @@ export default function Home() {
       </section>
 
       {/* Featured Items Section */}
-      <section className="py-24 bg-[#FFF5E6]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 font-['Playfair_Display']">
-              Featured items
-            </h2>
-            <div className="flex justify-center items-center gap-4">
-              <div className="h-px bg-[#B8860B]/30 w-20"></div>
-              <div className="w-2 h-2 rounded-full bg-[#B8860B]"></div>
-              <div className="h-px bg-[#B8860B]/30 w-20"></div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {allProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeatureProducts />
 
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

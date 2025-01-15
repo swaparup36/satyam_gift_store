@@ -1,5 +1,5 @@
 export type productType = {
-    id: number,
+    id?: string,
     name: string,
     category: string,
     price: number,
@@ -7,13 +7,15 @@ export type productType = {
     rating: number,
     image: string,
     description: string,
+    instock: boolean,
     reviews: productReviewType[],
 }
 
 export type productReviewType = {
-    id: number,
+    id?: string,
     author: string, 
     rating: number,
     date: string, 
-    content: string
+    content: string,
+    productId: string;
 }

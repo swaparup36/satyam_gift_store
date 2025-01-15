@@ -2,7 +2,7 @@ import { productType } from "./types";
 
 export const allProducts: productType[] = [
     {
-      id: 1,
+      id: "1",
       name: "Hallmark Stuffed Snoopy",
       category: "Home & Living",
       discountedPrice: 499,
@@ -16,30 +16,33 @@ export const allProducts: productType[] = [
       `,
       reviews: [
         {
-          id: 1,
+          id: "1",
           author: "Sarah Johnson",
           rating: 5,
           content: "This home decor piece is absolutely beautiful! The quality is exceptional, and it adds such a lovely touch to my living room. The encouraging message brings positivity to my space every day.",
-          date: "March 15, 2024"
+          date: "March 15, 2024",
+          productId: "1"
         },
         {
-          id: 2,
+          id: "2",
           author: "Michael Chen",
           rating: 4,
           content: "Great product overall. The design is elegant and the materials feel premium. Shipping was quick and the packaging protected the item well. Would recommend!",
-          date: "March 10, 2024"
+          date: "March 10, 2024",
+          productId: "1"
         },
         {
-          id: 3,
+          id: "3",
           author: "Emily Williams",
           rating: 5,
           content: "Perfect gift for my friend's housewarming! The craftsmanship is impressive and the message is meaningful. Love supporting businesses that create such thoughtful products.",
-          date: "March 5, 2024"
+          date: "March 5, 2024",
+          productId: "1"
         }
       ]
     },
     {
-      id: 2,
+      id: "2",
       name: "Throated Hummingbird Statue Figurine",
       category: "Jewelry & Accessories",
       discountedPrice: 399,
@@ -53,23 +56,25 @@ export const allProducts: productType[] = [
       `,
       reviews: [
         {
-          id: 1,
+          id: "1",
           author: "Sarah Johnson",
           rating: 5,
           content: "This home decor piece is absolutely beautiful! The quality is exceptional, and it adds such a lovely touch to my living room. The encouraging message brings positivity to my space every day.",
-          date: "March 15, 2024"
+          date: "March 15, 2024",
+          productId: "2"
         },
         {
-          id: 2,
+          id: "2",
           author: "Emily Williams",
           rating: 5,
           content: "Perfect gift for my friend's housewarming! The craftsmanship is impressive and the message is meaningful. Love supporting businesses that create such thoughtful products.",
-          date: "March 5, 2024"
+          date: "March 5, 2024",
+          productId: "2"
         }
       ]
     },
     {
-      id: 3,
+      id: "3",
       name: "The Golden Girls Perpetual Calendar",
       category: "Home & Living",
       discountedPrice: 92,
@@ -83,30 +88,33 @@ export const allProducts: productType[] = [
       `,
       reviews: [
         {
-          id: 1,
+          id: "1",
           author: "Sarah Johnson",
           rating: 5,
           content: "This home decor piece is absolutely beautiful! The quality is exceptional, and it adds such a lovely touch to my living room. The encouraging message brings positivity to my space every day.",
-          date: "March 15, 2024"
+          date: "March 15, 2024",
+          productId: "3"
         },
         {
-          id: 2,
+          id: "2",
           author: "Michael Chen",
           rating: 4,
           content: "Great product overall. The design is elegant and the materials feel premium. Shipping was quick and the packaging protected the item well. Would recommend!",
-          date: "March 10, 2024"
+          date: "March 10, 2024",
+          productId: "3"
         },
         {
-          id: 3,
+          id: "3",
           author: "Emily Williams",
           rating: 5,
           content: "Perfect gift for my friend's housewarming! The craftsmanship is impressive and the message is meaningful. Love supporting businesses that create such thoughtful products.",
-          date: "March 5, 2024"
+          date: "March 5, 2024",
+          productId: "3"
         }
       ]
     },
     {
-      id: 4,
+      id: "4",
       name: "Musical Kissing Couple",
       category: "Occasion Gifts",
       discountedPrice: 148,
@@ -120,18 +128,20 @@ export const allProducts: productType[] = [
       `,
       reviews: [
         {
-          id: 1,
+          id: "1",
           author: "Sarah Johnson",
           rating: 5,
           content: "This home decor piece is absolutely beautiful! The quality is exceptional, and it adds such a lovely touch to my living room. The encouraging message brings positivity to my space every day.",
-          date: "March 15, 2024"
+          date: "March 15, 2024",
+          productId: "4"
         },
         {
-          id: 2,
+          id: "2",
           author: "Michael Chen",
           rating: 4,
           content: "Great product overall. The design is elegant and the materials feel premium. Shipping was quick and the packaging protected the item well. Would recommend!",
-          date: "March 10, 2024"
+          date: "March 10, 2024",
+          productId: "4"
         }
       ]
     }
