@@ -17,7 +17,7 @@ model Product {
   image           String
   description     String
   instock         Boolean  @default(true)
-  review         Review[]
+  review          Review[]
 }
 
 model Review {
@@ -28,4 +28,9 @@ model Review {
   content   String
   productId String
   product   Product @relation(fields: [productId], references: [id])
+}
+
+model Categories {
+  id    String @id @default(cuid())
+  title String
 }

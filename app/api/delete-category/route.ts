@@ -6,31 +6,28 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest){
     const body = await req.json();
     try {
-        const existingProduct = await prisma.product.findUnique({
+        console.log("body: ", body);
+        const existingCategory = await prisma.categories.findUnique({
             where: {
-                id: body.id
+                id: body.categoryId
             }
         });
 
-        if(!existingProduct) {
+        if(!existingCategory) {
             return NextResponse.json({
-                success: false,
-                message: 'no product found with the given id'
+                success: true,
+                message: "No such category found"
             });
         }
 
-        const updatedProduct = await prisma.product.update({
-            data: {
-                instock: !existingProduct.instock
-            },
+        await prisma.categories.delete({
             where: {
-                id: body.id
+                id: body.categoryId
             }
         })
 
         return NextResponse.json({
             success: true,
-            updatedProduct: updatedProduct
         });
     } catch (error) {
         console.log(error);

@@ -19,3 +19,8 @@ export type productReviewType = {
     content: string,
     productId: string;
 }
+
+export type productCategoryType = {
+    id?: string,
+    title: string
+}

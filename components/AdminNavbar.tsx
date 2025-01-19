@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function AdminNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,18 +14,24 @@ export default function AdminNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-[#B8860B]">सत्यम्</span>
-            <span className="ml-2 text-xl font-semibold text-gray-800">Satyam</span>
+          <Link href="/" className="flex items-center w-fit">
+            <Image src="/logo.png" alt='logo' width={200} height={200} className='w-12 h-10' />
+            <div className='ml-2 flex justify-center items-start flex-col'>
+              <span className="text-xl font-semibold text-gray-800">Ambbera</span>
+              <p className='text-xs'>Unwrap joy, and discover happiness</p>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-12 -ml-52">
             <Link href="/admin/all-products" className="text-gray-700 hover:text-[#B8860B] transition-colors">
                 All Products
             </Link>
             <Link href="/admin/add-product" className="text-gray-700 hover:text-[#B8860B] transition-colors">
                 Add Product
+            </Link>
+            <Link href="/admin/add-category" className="text-gray-700 hover:text-[#B8860B] transition-colors">
+                Add Category
             </Link>
             <Link href="/" className="text-gray-700 hover:text-[#B8860B] transition-colors">
                 User view

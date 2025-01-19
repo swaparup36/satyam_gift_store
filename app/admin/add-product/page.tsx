@@ -5,8 +5,7 @@ import { ArrowLeft, Upload } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { productType } from '@/lib/types';
-import { categories } from '@/lib/constants';
+import { productCategoryType, productType } from '@/lib/types';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
@@ -28,6 +27,7 @@ const AdminProductUpload = () => {
   });
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
 
 
   const handleSubmit = async(e: React.FormEvent) => {
@@ -133,11 +133,27 @@ const AdminProductUpload = () => {
     }
   };
 
+  const getAllCategories = async () => {
+    try {
+        const categoriesRes = await axios.get('/api/get-all-categories');
+
+        if(!categoriesRes.data.success) {
+            toast.error(`can not fetch categories: ${categoriesRes.data.message}`);
+        }
+
+        setAllCategories(categoriesRes.data.categories);
+    } catch (error) {
+        toast.error(`can not fetch categories: ${error}`);
+    }
+  }
+
   useEffect(()=>{
     const isAuthenticated = localStorage.getItem('adminToken');
     if (!isAuthenticated) {
       router.push('/admin/login');
     }
+
+    getAllCategories();
   }, []);
 
   return (
@@ -185,8 +201,8 @@ const AdminProductUpload = () => {
                   className="w-full px-4 py-2 border rounded-md focus:ring-[#C17777] focus:border-[#C17777]"
                 >
                   <option value="">Select a category</option>
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
+                  {allCategories && allCategories.map(category => (
+                    <option key={category.id} value={category.title}>{category.title}</option>
                   ))}
                 </select>
               </div>

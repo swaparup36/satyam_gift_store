@@ -79,7 +79,9 @@ const ProductDetails = () => {
         const encodedMessege = encodeURIComponent(`
             Hi, I want to purchase this product.
 
-            Product link - ${process.env.HOST_NAME}/product-details/${productId}
+            Quantity: ${quantity}
+
+            Product link - ${process.env.NEXT_PUBLIC_HOST_NAME}/product-details/${productId}
         `);
 
         window.open(`https://wa.me/${7439965656}?text=${encodedMessege}`, '_blank');

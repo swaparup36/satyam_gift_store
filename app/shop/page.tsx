@@ -7,20 +7,32 @@ import { Filter, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
-import { categories } from '@/lib/constants';
 import axios from 'axios';
-import { productType } from '@/lib/types';
+import { productCategoryType, productType } from '@/lib/types';
 
 
 const ProductsPage = () => {
-  const [priceRange, setPriceRange] = useState([50, 5000]);
+  const [priceRange, setPriceRange] = useState([300, 5000]);
   const [sortingOrder, setSortingOrder] = useState<string>("Default sorting");
   const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null);
 
-  
+  const getAllCategories = async () => {
+    try {
+        const categoriesRes = await axios.get('/api/get-all-categories');
+
+        if(!categoriesRes.data.success) {
+            toast.error(`can not fetch categories: ${categoriesRes.data.message}`);
+        }
+
+        setAllCategories(categoriesRes.data.categories);
+    } catch (error) {
+        toast.error(`can not fetch categories: ${error}`);
+    }
+  }
 
   useEffect(()=>{
     const getAllProducts = async() => {
@@ -41,6 +53,7 @@ const ProductsPage = () => {
       }
     }
 
+    getAllCategories();
     getAllProducts();
   }, []);
 
@@ -64,13 +77,19 @@ const ProductsPage = () => {
             <div className="mb-8">
               <h2 className="text-xl font-bold mb-4">Product categories</h2>
               <ul className="space-y-3">
-                {categories.map((category) => (
-                  <li key={category}>
-                    <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category)}>
-                      {category}
-                    </span>
-                  </li>
-                ))}
+                {
+                  allCategories ? (
+                    allCategories.map((category) => (
+                      <li key={category.id}>
+                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category.title)}>
+                          {category.title}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className='text-gray-500'>no categories</p>
+                  )
+                }
               </ul>
             </div>
 
@@ -78,7 +97,7 @@ const ProductsPage = () => {
               <h2 className="text-xl font-bold mb-4">Filter by Price</h2>
               <input
                 type="range"
-                min="50"
+                min="300"
                 max="5000"
                 value={priceRange[1]}
                 onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
@@ -98,13 +117,19 @@ const ProductsPage = () => {
               </div>
               <h2 className="text-xl font-bold mb-4">Product categories</h2>
               <ul className="space-y-3">
-                {categories.map((category) => (
-                  <li key={category}>
-                    <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category)}>
-                      {category}
-                    </span>
-                  </li>
-                ))}
+                {
+                  allCategories ? (
+                    allCategories.map((category) => (
+                      <li key={category.id}>
+                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category.title)}>
+                          {category.title}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className='text-gray-500'>no categories</p>
+                  )
+                }
               </ul>
             </div>
 

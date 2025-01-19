@@ -6,22 +6,36 @@ import React, { useEffect, useState } from 'react';
 import { Filter, Star, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { categories } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { productType } from '@/lib/types';
+import { productCategoryType, productType } from '@/lib/types';
 
 
 const AdminAllProductsPage = () => {
   const router = useRouter();
-  const [priceRange, setPriceRange] = useState([50, 5000]);
+  const [priceRange, setPriceRange] = useState([300, 5000]);
   const [sortingOrder, setSortingOrder] = useState<string>("Default sorting");
   const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [allProducts, setAllProducts] = useState<productType[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [allCategories, setAllCategories] = useState<productCategoryType[] | null>(null)
+
+  const getAllCategories = async () => {
+    try {
+        const categoriesRes = await axios.get('/api/get-all-categories');
+
+        if(!categoriesRes.data.success) {
+            toast.error(`can not fetch categories: ${categoriesRes.data.message}`);
+        }
+
+        setAllCategories(categoriesRes.data.categories);
+    } catch (error) {
+        toast.error(`can not fetch categories: ${error}`);
+    }
+  }
 
   const getAllProducts = async() => {
     setIsLoading(true);
@@ -76,6 +90,7 @@ const AdminAllProductsPage = () => {
     if (!isAuthenticated) {
       router.push('/admin/login');
     }
+    getAllCategories();
     getAllProducts();
   }, []);
 
@@ -99,13 +114,19 @@ const AdminAllProductsPage = () => {
             <div className="mb-8">
               <h2 className="text-xl font-bold mb-4">Product categories</h2>
               <ul className="space-y-3">
-                {categories.map((category) => (
-                  <li key={category}>
-                    <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category)}>
-                      {category}
-                    </span>
-                  </li>
-                ))}
+                {
+                  allCategories ? (
+                    allCategories.map((category) => (
+                      <li key={category.id}>
+                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category.title)}>
+                          {category.title}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className='text-gray-500'>no categories</p>
+                  )
+                }
               </ul>
             </div>
 
@@ -113,7 +134,7 @@ const AdminAllProductsPage = () => {
               <h2 className="text-xl font-bold mb-4">Filter by Price</h2>
               <input
                 type="range"
-                min="50"
+                min="300"
                 max="5000"
                 value={priceRange[1]}
                 onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
@@ -133,13 +154,19 @@ const AdminAllProductsPage = () => {
               </div>
               <h2 className="text-xl font-bold mb-4">Product categories</h2>
               <ul className="space-y-3">
-                {categories.map((category) => (
-                  <li key={category}>
-                    <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category)}>
-                      {category}
-                    </span>
-                  </li>
-                ))}
+                {
+                  allCategories ? (
+                    allCategories.map((category) => (
+                      <li key={category.id}>
+                        <span className="text-gray-600 hover:text-[#C17777] cursor-pointer" onClick={() => setSelectedCategory(category.title)}>
+                          {category.title}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className='text-gray-500'>no categories</p>
+                  )
+                }
               </ul>
             </div>
 
@@ -249,6 +276,11 @@ const AdminAllProductsPage = () => {
                           <Button onClick={() => handleDeleteProduct(product.id ? product.id : '')} className="bg-[#B8860B] border-2 border-[#B8860B] text-white hover:bg-[#B8860B] hover:text-white transition-colors w-full ml-1">
                               Delete
                           </Button>
+                      </div>
+                      <div className='flex justify-center items-center mt-2 w-full'>
+                          <Link href={`/admin/product-reviews/${product.id}`} className="bg-[#B8860B] border-2 border-[#B8860B] text-white hover:bg-[#B8860B] hover:text-white transition-colors w-full flex rounded-md justify-center items-center py-2">
+                              All Reviews
+                          </Link>
                       </div>
                     </div>
                   ))}
