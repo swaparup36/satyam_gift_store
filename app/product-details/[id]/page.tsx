@@ -12,6 +12,9 @@ import Link from 'next/link';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import FeatureProducts from '@/app/FeatureProducts';
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const ProductReview = ({ rating, author, date, content }: { 
   rating: number;
